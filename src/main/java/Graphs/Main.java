@@ -23,7 +23,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            String fileName = "linnade_kaugused.txt";
+            String fileName = "direct_paths.txt";
             List<String> starts = Arrays.asList(new Dijkstra(fileName).townNames);
             List<String> destinations = new ArrayList<>(starts);
             Collections.shuffle(starts);
@@ -36,15 +36,17 @@ public class Main {
                 int rangeLimit = 30 + new Random().nextInt(100);
                 Dijkstra dijkstra = new Dijkstra(fileName);
 
-                System.out.println(
-                        "Start: " + start +
-                        "\nDestination: " + destination +
-                        "\nMax range: " + rangeLimit);
+                System.out.println("From:         " + start);
+                System.out.println("To:           " + destination);
+                System.out.println("Direct path:  " + dijkstra.directDistance(start, destination) + " km");
+                System.out.println("Max range:    " + rangeLimit + " km");
+
                 System.out.println("\nThe path you want to take is: ");
                 System.out.println(dijkstra.findShortestPath(start, destination, rangeLimit));
-                System.out.println("---------------------------------------------------------------------------------");
+                System.out.println("\n---------------------------------------------------------------------------------\n");
+                Thread.sleep(1000);
             }
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | InterruptedException e) {
             System.out.println("Linnade kauguste faili ei leitud!");
         }
     }

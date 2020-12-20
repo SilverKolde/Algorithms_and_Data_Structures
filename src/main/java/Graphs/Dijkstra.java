@@ -92,6 +92,10 @@ public class Dijkstra {
         throw new RuntimeException("I don't know this town...");
     }
 
+    protected int directDistance(String from, String to) {
+        return distances[index(from)][index(to)];
+    }
+
     private void readData(String file) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             townNames = br.readLine().split("\t");
@@ -128,7 +132,7 @@ class Result {
 
     public String toString() {
         if(pathLength != -1) {
-            return String.join(" > ", path) + "\nTotal distance: " + pathLength;
+            return String.join(" > ", path) + "\nTotal distance: " + pathLength + " km";
         } else {
             return ("Towns " + path.get(0) + " and " + path.get(path.size() - 1)
                     + " are not reachable within specified range.");

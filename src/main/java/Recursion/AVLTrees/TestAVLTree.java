@@ -21,7 +21,7 @@ import java.util.List;
 
 public class TestAVLTree {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Node<Integer> falseAVL = new Node<>(10,
                 new Node<>(11),
                 null);
@@ -31,37 +31,47 @@ public class TestAVLTree {
         System.out.println("\n=================================================================================");
         System.out.println("                              Inserting elements                                 ");
         System.out.println("=================================================================================\n");
+        Thread.sleep(1000);
 
         // Keep in mind that print method reserves two digits for each node, above that it may look distorted.
-        int[] arr = generateInts(1000, 100);
+        int[] arr = generateInts(80, 100);
 
         for (int i = 0; i < arr.length; i++) {
-            System.out.println("After inserting: " + arr[i] + "\n");
             avlTree.insertNode(arr[i]);
-            System.out.println(avlTree.toString());
             boolean isAVL = avlTree.isAVLTree();
-            System.out.println("\nNodes in tree: " + countNodes(avlTree.root));
+            System.out.println("Inserted: " + arr[i] +
+                    "       Nodes in tree: " + countNodes(avlTree.root) +
+                    "       is AVL? " + isAVL + "\n");
+            System.out.println(avlTree.toString());
             if (i != arr.length-1)
-                System.out.println("---------------------------------------------------------------------------------");
+                System.out.println("-------------------------------------------------------------------------------\n");
+
+            if (i > 9 && i < 77) Thread.sleep(100);
+            else Thread.sleep(1000);
 
             if (!isAVL) throw new RuntimeException("After adding element nr " + i + ", something broke.");
         }
 
-        System.out.println("\n=================================================================================");
+        System.out.println("\n\n=================================================================================");
         System.out.println("                               Deleting elements                                 ");
-        System.out.println("=================================================================================\n");
+        System.out.println("=================================================================================\n\n");
+        Thread.sleep(1000);
 
         List<Integer> elements = treeToList(avlTree.root);
         Collections.shuffle(elements);
 
         for (int i = 0 ; i < elements.size() ; i++) {
-            System.out.println("After removing: " + elements.get(i) + "\n");
             avlTree.removeValue(elements.get(i));
-            System.out.println(avlTree.toString());
             boolean isAVL = avlTree.isAVLTree();
-            System.out.println("\nNodes in tree: " + countNodes(avlTree.root));
-            if (i != elements.size()-1)
-                System.out.println("---------------------------------------------------------------------------------");
+            System.out.println("Removed: " + elements.get(i) +
+                    "       Nodes in tree: " + countNodes(avlTree.root) +
+                    "       is AVL? " + isAVL + "\n");
+            System.out.println(avlTree.toString());
+            if (i != elements.size()-1) {
+                System.out.println("\n-------------------------------------------------------------------------------");
+                if (i > 10 && i < 78) Thread.sleep(100);
+                else Thread.sleep(1000);
+            }
 
             if (!isAVL) throw new RuntimeException("After removing element nr " + i + ", something broke.");
         }

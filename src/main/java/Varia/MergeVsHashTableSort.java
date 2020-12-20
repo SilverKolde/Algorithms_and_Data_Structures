@@ -22,9 +22,12 @@ import java.util.Random;
 
 public class MergeVsHashTableSort {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Person[][] personMatrice = personMatrice();
 
+        System.out.println("\nGiven an array of Person instances, we'll sort them by id\n" +
+                "  and print out the average sorting speeds for both algorithms.\n");
+        Thread.sleep(3000);
         System.out.println("              Average speeds in ms");
         System.out.println("Array length   Merge   Hashtable");
         for (Person[] people : personMatrice) {

@@ -31,12 +31,16 @@ public class Huffman {
 // ================================================================================================================== //
     public static void main(String[] args) {
 
-//        String input = "Put your own text here";
-        String input = loeSisseSuurTekstiFail("http://norvig.com/big.txt");
+        String input = "she sells some seashells by the seashore";
+//        String input = readBigTextFromWeb("http://norvig.com/big.txt");
+        System.out.println("\n\nOriginal text:\n    " + input);
         Result result = packUp(input);
         String fileName = "packed.txt";
         writeToFile(result.cipher, result.packedUpText, fileName);
         int bitCount = result.packedUpText.length(); // 28550654, if used text from "http://norvig.com/big.txt"
+
+        System.out.println("\nWrote the following cipher to file:\n    " + result.cipher);
+        System.out.println("And " + bitCount + " bits."); // actually not bits
 
         /**
          * This code writes the packed text to file as String, hence it actually does not pack up.
@@ -57,7 +61,8 @@ public class Huffman {
 
         assert input.equals(unpacked);
 
-        System.out.println("Packing up and unpacking the text was successful!");
+        System.out.println("\nPacking up and unpacking the text was successful!");
+        System.out.println("After decoding binary from file, we restored original text:\n    " + unpacked);
 
         // Checking if the most common characters have the shortest binary codes
 
@@ -76,7 +81,7 @@ public class Huffman {
             }
         }
         if (everythingOK)
-            System.out.println("Most frequent symbols have the shortest codes.");
+            System.out.println("\nVerified, that the most frequent symbols do have the shortest codes.");
         else
             System.out.println("Oops! Something went wrong :/");
     }
@@ -90,6 +95,7 @@ public class Huffman {
         Map<Character, Integer> frequencies = mapSymbolsAndFreqs(text);
 
         Node<Character> huffman = createHuffmanTree(frequencies);
+        System.out.println("\nCreated the following Huffman's tree:\n" + huffman);
         HashMap<Character, String> cipher = createCipher(frequencies.keySet(), huffman);
 
         cipherForChecking = new HashMap<>(cipher); // for verifying results later on
@@ -296,7 +302,7 @@ public class Huffman {
         }
     }
 
-    private static String loeSisseSuurTekstiFail(String url)  {
+    private static String readBigTextFromWeb(String url)  {
         StringBuilder wholeText = new StringBuilder();
         try (BufferedReader in = new BufferedReader(
                 new InputStreamReader(
@@ -359,8 +365,12 @@ class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
         if (node == null)
             return row.toString();
         if (level == 1) {
-            String inf = (node.info == null) ? "" : String.valueOf(node.info);
-            String str = inf + ":" + node.frequency;
+            String str;
+            if (node.info == null) {
+                str = String.valueOf(node.frequency);
+            } else {
+                str = node.info + ":" + node.frequency;
+            }
             str = (str.length() == 1) ? " "+str : str;
             row.replace(node.x*2, (node.x*2)+2, str);
             return row.toString();

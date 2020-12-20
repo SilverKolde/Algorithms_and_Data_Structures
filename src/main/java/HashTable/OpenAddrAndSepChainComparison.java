@@ -32,7 +32,7 @@ import java.util.Random;
  *****************************************************************************/
 
 public class OpenAddrAndSepChainComparison {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         // Size of hash tables
         int n = 1000;
@@ -113,15 +113,16 @@ public class OpenAddrAndSepChainComparison {
         }
 
         String[] percents = {"10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "99%"};
-        System.out.println("          Table 1 - Open addressing                   Table 2 - Separate chaining    ");
+        System.out.println("\nFilled      Table 1 - Open addressing                      Table 2 - Separate chaining    ");
         for (int i = 0; i < 10; i++) {
-            System.out.printf("%6s%12s%6s%13s%10s%12s%10s%13s%6s%n",
-                    " "+percents[i]+" |", " successes: ", " "+t1SSCount[i]+" |", " comparisons: ", " "+t1SuccessComparisonCounts[i]+" ||",
-                                          " successes: ", " "+t2SSCount[i]+" |", " comparisons: ", " "+t2SuccessComparisonCount[i]);
-            System.out.printf("%6s%12s%6s%13s%10s%12s%10s%13s%6s%n",
-                    "     |", " fails:     ", " "+t1FSCount[i]+" |", " comparisons: ", " "+t1FailComparisonCounts[i]+" ||",
-                    " fails:     ", " "+t2FSCount[i]+" |", " comparisons: ", " "+t2FailComparisonCounts[i]);
-            System.out.println("------------------------------------------------------------------------------------------");
+            System.out.printf("%8s%15s%9s%13s%10s%15s%10s%13s%6s%n",
+                    " "+percents[i]+" |", " person found: ", " "+t1SSCount[i]+" |", " operations: ", " "+t1SuccessComparisonCounts[i]+" ||",
+                                          " person found: ", " "+t2SSCount[i]+" |", " operations: ", " "+t2SuccessComparisonCount[i]);
+            System.out.printf("%8s%15s%8s%13s%10s%15s%9s%13s%6s%n",
+                    "     |", " not found:     ", " "+t1FSCount[i]+" |", " operations: ", " "+t1FailComparisonCounts[i]+" ||",
+                    " not found:     ", " "+t2FSCount[i]+" |", " operations: ", " "+t2FailComparisonCounts[i]);
+            System.out.println("---------------------------------------------------------------------------------------------------");
+            Thread.sleep(300);
         }
 
         System.out.println("\nFrom the table above we can conclude, " +
